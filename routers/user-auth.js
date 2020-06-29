@@ -7,6 +7,6 @@ router.post('/inscription',userAuthController.postInscription);
 
 router.get('/connexion',userAuthController.getConnexion);
 
-router.post('/connxion',userAuthController.postConnexion);
+router.post('/connexion',userAuthController.postConnexion);
 
 module.exports = router;

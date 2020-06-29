@@ -22,10 +22,16 @@ exports.postInscription = async(req,res,next)=>{
 
 }
 
-exports.getConnexion = (req,res,next)=>{
-    res.render('connexion');
+exports.getConnexion = async (req,res,next)=>{
+    return res.render('connexion');
 }
 
-exports.postConnexion = (req,res,next)=>{
-
+exports.postConnexion = async(req,res,next)=>{
+    const userDoc = await Users.findOne({pseudo:req.body.pseudo});
+    if(!userDoc){
+        req.flash('erreur-auth',"Le pseudo n'existe pas");
+        return res.render("connexion");
+    }else{
+        console.log(userDoc);
+    }
 }

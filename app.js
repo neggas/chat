@@ -1,7 +1,25 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const session = require("express-session");
+const mongodbStore = require("connect-mongodb-session")(session);
+const flash = require("connect-flash");
+
+
 const app = express();
+
+const store = new mongodbStore({
+    uri:`mongodb://triel:Triel88@cluster0-shard-00-00-5befv.mongodb.net:27017,cluster0-shard-00-01-5befv.mongodb.net:27017,cluster0-shard-00-02-5befv.mongodb.net:27017/users`,
+    collection:"sessions"
+})
+
+app.use(session({
+    secret:"my secret",
+    resave:false,
+    saveUninitialized:false,
+    store:store
+}))
+app.use(flash());
 app.use(express.static('public'));
 
 app.set("view engine","ejs");
