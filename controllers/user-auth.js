@@ -17,14 +17,13 @@ exports.postInscription = async(req,res,next)=>{
     }
     const done = await new Users(userInfo);
     if(done){
-        res.redirect("/");
+        return res.redirect("/connexion");
     }
 
-    
 }
 
 exports.getConnexion = (req,res,next)=>{
-
+    res.render('connexion');
 }
 
 exports.postConnexion = (req,res,next)=>{
