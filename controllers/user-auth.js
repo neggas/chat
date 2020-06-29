@@ -40,8 +40,8 @@ exports.postConnexion = async(req,res,next)=>{
        if(req.body.password !== userDoc.password){
           
             req.flash('erreur-auth',"le mot de passe ne corespond pas à celui du compte");
-            res.render("connexion");
-            console.log("je redirectionne");
+            return res.render("connexion");
+         
        }else{
            req.session.isLogged = true;
            req.session.UserDoc = userDoc;
