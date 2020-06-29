@@ -9,7 +9,7 @@ const flash = require("connect-flash");
 const app = express();
 
 const store = new mongodbStore({
-    uri:`mongodb://triel:Triel88@cluster0-shard-00-00-5befv.mongodb.net:27017,cluster0-shard-00-01-5befv.mongodb.net:27017,cluster0-shard-00-02-5befv.mongodb.net:27017/users`,
+    uri:`mongodb://triel:Triel88@cluster0-shard-00-00-5befv.mongodb.net:27017,cluster0-shard-00-01-5befv.mongodb.net:27017,cluster0-shard-00-02-5befv.mongodb.net:27017/users?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority`,
     collection:"sessions"
 })
 
@@ -20,8 +20,9 @@ app.use(session({
     store:store
 }))
 app.use(flash());
-app.use(express.static('public'));
 
+
+app.use(express.static('public'));
 app.set("view engine","ejs");
 
 //inclusions des routes 
@@ -34,9 +35,12 @@ app.use(bodyParser.json())
 app.use(authUser);
 app.use(appRoute);
 
+app.use((req,res,next)=>{
+    res.locals.isOnline = req.session.isLogged;
+    next();
+})
+
 const PORT = process.env.PORT || 3000;
-
-
 mongoose.connect(`mongodb://triel:Triel88@cluster0-shard-00-00-5befv.mongodb.net:27017,cluster0-shard-00-01-5befv.mongodb.net:27017,cluster0-shard-00-02-5befv.mongodb.net:27017/users?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority`,{useNewUrlParse:true,useUnifiedTopology:true})
 .then(()=>{
     app.listen(PORT,()=>{
