@@ -9,5 +9,10 @@ const UserSchema = new Schema({
     password:{
         type:String,
         required:true
+    },
+    picture:{
+        type:String
     }
 })
+
+module.exports = new mongoose.model("Users",UserSchema);
