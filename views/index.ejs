@@ -33,7 +33,7 @@
 						<ui class="contacts">
 						<% for(user of users){%>
 							<li>
-								<div class="d-flex bd-highlight">
+								<div class="d-flex bd-highlight ami">
 									<div class="img_cont">
 										<img src="<%=user.picture%>" class="rounded-circle user_img">
 										<span class="online_icon"></span>
@@ -156,11 +156,12 @@
 				</div>
 			</div>
 		</div>
+		
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
 			var socket = io();
 		</script>
-		<script src="js/dynamiqueActive.js"></script>
 		<script src="js/socket.js"></script>
+		
 	</body>
 </html>
