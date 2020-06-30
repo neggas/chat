@@ -32,18 +32,22 @@
 					<div class="card-body contacts_body">
 						<ui class="contacts">
 						<% for(user of users){%>
-							<li>
-								<div class="d-flex bd-highlight ami">
-									<div class="img_cont">
-										<img src="<%=user.picture%>" class="rounded-circle user_img">
-										<span class="online_icon"></span>
-									</div>
-									<div class="user_info">
-										<span><%=user.pseudo%></span>
-										<p><%= user.pseudo %> is online</p>
-									</div>
-								</div>
-							</li>
+							<a class="user_link" href= <%= '/'+ user._id %>>
+								<li>
+									
+										<div class="d-flex bd-highlight ami">
+											<div class="img_cont">
+												<img src="<%=user.picture%>" class="rounded-circle user_img">
+												<span class="online_icon"></span>
+											</div>
+											<div class="user_info">
+												<span><%=user.pseudo%></span>
+												<p><%= user.pseudo %> is online</p>
+											</div>
+										</div>
+									
+								</li>
+							</a>
 						<%} %>
 						</ui>
 					</div>

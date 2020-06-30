@@ -4,6 +4,7 @@ window.onload = ()=>{
 
     //selection dynamique des liste de chat
     const activeItems = document.querySelectorAll(".contacts .d-flex");
+    const links = document.querySelectorAll('.user_link');
     const el =  document.querySelector(".contacts");
     const current = el.firstChild.nextSibling;
     current.classList.add('active');
@@ -13,19 +14,17 @@ window.onload = ()=>{
            const activeDiv = item.parentElement;
            document.querySelector('.contacts .active').classList.remove('active');
            activeDiv.classList.add('active');
-          
         })
     })
 
     //communication par socket
     socket.on("users",(users)=>{
-
         search.addEventListener('input',(event)=>{
-            activeItems.forEach((item)=>{
 
+            //recherches des utilisateurs
+            activeItems.forEach((item)=>{
                 if(event.target.value !== ''){
                     if(!(item.children[1].children[0].innerHTML.includes(event.target.value))){
-                        console.log("l'element est cacher");
                         item.parentElement.style.display = 'none';
                     }else{
                         item.parentElement.style.display = 'block';
@@ -37,4 +36,15 @@ window.onload = ()=>{
         })
 
     })
+
+    //changement de room
+    links.forEach((link)=>{
+        link.addEventListener('click',(event)=>{
+            event.preventDefault();
+            let userId = link.href.split("//").join('').split('/')[1];
+            socket.emit("user",userId); 
+       })
+    })
+   
+
 }
