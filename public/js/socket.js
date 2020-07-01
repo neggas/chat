@@ -1,7 +1,13 @@
 window.onload = ()=>{
     let  search = document.querySelector('.input-group .search');
     let  userInfos = document.querySelectorAll('.ami .user_info');
+    const input = document.querySelector('.input-group .type_msg');
+    const send_btn = document.querySelector('.input-group .send_btn');
 
+    // les variables responsables du tchat
+    let receiver;
+    let sender;
+    let message;
     //selection dynamique des liste de chat
     const activeItems = document.querySelectorAll(".contacts .d-flex");
     const links = document.querySelectorAll('.user_link');
@@ -44,9 +50,13 @@ window.onload = ()=>{
     const divImg = updateUser[0];
     const divInfo = updateUser[1];
 
-    socket.on('selectedUser',(user)=>{
+    socket.on('selectedUser',(user,send)=>{
         divInfo.children[0].innerHTML = `Chat with ${user.pseudo}`;
         divImg.children[0].src=`${user.picture}`;
+
+        //on definis celui qui recois les message a meme temps;
+        receiver = user;
+        sender = send;
     })
 
     //changement de room
@@ -57,6 +67,17 @@ window.onload = ()=>{
             socket.emit("user",userId); 
        })
     })
-   
+
+    //gestion des envois des message
+    send_btn.addEventListener('click',(event)=>{
+       if(input.value !== ''){
+           let messages = {receiver,sender:sender,message:input.value};
+           socket.emit('new_message',messages);
+       }
+    })   
+
+    socket.on('new_msg',(data)=>{
+        console.log(data);
+    })
 
 }

@@ -45,8 +45,8 @@ exports.postConnexion = async(req,res,next)=>{
        }else{
            req.session.isLogged = true;
            req.session.UserDoc = userDoc;
-           req.session.save();
-           return res.redirect('/');
+           const erreur = await req.session.save();
+           if(!erreur) return res.redirect('/');
        }
     }
 }
