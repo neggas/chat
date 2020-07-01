@@ -47,8 +47,9 @@ io.on("connection",async (socket)=>{
    const users =  await User.find();
    socket.emit("users",users);
 
-   socket.on('user',(userId)=>{
-       console.log(userId);
+   socket.on('user',async(userId)=>{
+     const user = await User.findOne({_id:userId});
+        socket.emit("selectedUser",user);
    })
 })
 const PORT = process.env.PORT || 3000;

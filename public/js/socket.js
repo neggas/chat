@@ -17,7 +17,8 @@ window.onload = ()=>{
         })
     })
 
-    //communication par socket
+    //communication par socket pour recuperer la liste des utisateur
+    //et faire la recherche
     socket.on("users",(users)=>{
         search.addEventListener('input',(event)=>{
 
@@ -35,6 +36,17 @@ window.onload = ()=>{
             })
         })
 
+    })
+
+    //changement du room l'ors du clique
+
+    const updateUser = document.querySelector('.msg_head .d-flex').children;
+    const divImg = updateUser[0];
+    const divInfo = updateUser[1];
+
+    socket.on('selectedUser',(user)=>{
+        divInfo.children[0].innerHTML = `Chat with ${user.pseudo}`;
+        divImg.children[0].src=`${user.picture}`;
     })
 
     //changement de room
